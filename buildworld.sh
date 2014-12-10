@@ -11,11 +11,11 @@ out_int="eth0"				#Outbound interface of VM Host
 es_mem="10G"                                    # How much memory should elasticsearch for moloch have? (< 32GB)
 moloch_password="OmG_37_Rul3z!1!"               # Password for Moloch
 moloch_fqdn="etcuckoo.localhost"                # FQDN for Moloch Cert
-moloch_country="INTERNET"                               # Country for Moloch Cert
-moloch_state="WIN"                                 # State for Moloch Cert
-moloch_orgname="DOoMP"                               # Org Name for Moloch Cert
-moloch_orgunit="MISCREANT PUNCHERS"                               # Org unit for Moloch Cert
-moloch_locality="EARTH"                              # Locality for Moloch Cert
+moloch_country="INTERNET"                       # Country for Moloch Cert
+moloch_state="WIN"                              # State for Moloch Cert
+moloch_orgname="DOoMP"                          # Org Name for Moloch Cert
+moloch_orgunit="MISCREANT PUNCHERS"             # Org unit for Moloch Cert
+moloch_locality="EARTH"                         # Locality for Moloch Cert
 
 #check for cuckoo user
 if [ `whoami` != $user ]; then
@@ -188,11 +188,11 @@ sudo cp etc/disablesid.conf /usr/local/suricata/etc/
 cd ..
 ruleupdates.sh
 
-unzip moloch-master.zip
-cd moloch-master
+#Moloch Stuff
+git clone https://github.com/aol/moloch.git
+cd moloch
 cp ../easybutton-config.sh .
-patch -p1 < ../moloch-geoip-fix.diff
-patch -p1 < ../moloch-free-space.diff
+sed -i 's,freeSpaceG = 600,freeSpaceG = 5,' single-host/etc/config.ini.template
 sed -i 's/echo -n "Use pfring?.*$/USEPFRING=no/' easybutton-singlehost.sh
 sed -i 's/read USEPFRING//' easybutton-singlehost.sh
 sed -i 's/echo -n "Memory to give to elasticsearch, box MUST have more then this available: [512M] "//' easybutton-singlehost.sh
@@ -210,7 +210,7 @@ sed -i "s,LOCALITY=CHANGEME,LOCALITY=${moloch_locality}," easybutton-config.sh
 sudo ./easybutton-singlehost.sh
 cd ..
 sudo pkill -f "/data/moloch/bin/node viewer.js"
-sudo pkill -f "/data/moloch/elasticsearch-0"
+sudo pkill -f "/data/moloch/elasticsearch"
 
 sudo git clone https://github.com/EmergingThreats/cuckoo-1.1.git /data/cuckoo
 
@@ -224,7 +224,7 @@ rm yara-3.1.0 -Rf
 sudo rm volatility-2.4 -Rf
 rm pydeep -Rf
 rm distorm3 -Rf
-sudo rm moloch-master -Rf
+sudo rm moloch -Rf
 rm pp.config
 
 chmod +x services/*
@@ -255,10 +255,6 @@ sudo apt-get install virtualbox-4.3 -y
 
 echo xfce4-session > ~/.xsession
 sudo service xrdp restart
-
-#sudo virsh net-destroy default
-#sudo virsh net-undefine default
-#sudo service libvirtd restart
 
 echo "#!/bin/sh
 su cuckoo -c \"/usr/local/bin/ruleupdates.sh\" && /etc/init.d/suricata restart" | sudo tee /etc/cron.daily/ruleupdates
