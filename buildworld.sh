@@ -183,7 +183,7 @@ chmod +x services/*
 sudo cp services/* /etc/init.d/
 sudo update-rc.d suricata defaults
 
-/etc/init.d/moloch start
+echo "etc/init.d/moloch start
 /etc/init.d/cuckoo start
 exit 0" | sudo tee /etc/rc.local
 
