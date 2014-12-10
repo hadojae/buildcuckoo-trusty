@@ -9,12 +9,12 @@ out_int="eth0"				#Outbound interface of VM Host
 
 ### Moloch Config Variables ###
 es_mem="10G"                                    # How much memory should elasticsearch for moloch have? (< 32GB)
-moloch_password="OmG_37_Rul3z!1!"               # Password for Moloch
+moloch_password="OmG_3t_Rul3z!1!"               # Password for Moloch
 moloch_fqdn="etcuckoo.localhost"                # FQDN for Moloch Cert
-moloch_country="INTERNET"                       # Country for Moloch Cert
+moloch_country="US"                       # Country for Moloch Cert
 moloch_state="WIN"                              # State for Moloch Cert
-moloch_orgname="DOoMP"                          # Org Name for Moloch Cert
-moloch_orgunit="MISCREANT PUNCHERS"             # Org unit for Moloch Cert
+moloch_orgname="ETcuckoo"                          # Org Name for Moloch Cert
+moloch_orgunit="ETcuckoo"             # Org unit for Moloch Cert
 moloch_locality="EARTH"                         # Locality for Moloch Cert
 
 #check for cuckoo user
