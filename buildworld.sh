@@ -261,7 +261,7 @@ su cuckoo -c \"/usr/local/bin/ruleupdates.sh\" && /etc/init.d/suricata restart" 
 sudo chmod +x /etc/cron.daily/ruleupdates
 
 #Configure Iptables to allow networking to work
-iptables -A FORWARD -o $out_int -i $sniff_net -s $sniff_sub -m conntrack --ctstate NEW -j ACCEPT
-iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-iptables -A POSTROUTING -t nat -j MASQUERADE
-sysctl -w net.ipv4.ip_forward=1
+sudo iptables -A FORWARD -o $out_int -i $sniff_net -s $sniff_sub -m conntrack --ctstate NEW -j ACCEPT
+sudo iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+sudo iptables -A POSTROUTING -t nat -j MASQUERADE
+sudo sysctl -w net.ipv4.ip_forward=1
